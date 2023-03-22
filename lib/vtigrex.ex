@@ -12,7 +12,7 @@ defmodule Vtigrex do
       iex>   "https://your_instance.odx.vtiger.com/restapi/v1/vtiger/default",
       iex>   "your_user@your_host.com",
       iex>   "y0ur4cc3sk3y"
-      iex>)
+      iex> )
       %Tesla.Client{
         pre: [
           {Tesla.Middleware.BaseUrl, :call, ["https://your_instance.odx.vtiger.com/restapi/v1/vtiger/default"]},
