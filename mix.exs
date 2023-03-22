@@ -27,7 +27,8 @@ defmodule Vtigrex.MixProject do
       {:tesla, "~> 1.5"},
       {:jason, "~> 1.4"},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
-      {:ex_doc, "~> 0.29.3", only: [:dev], runtime: false}
+      {:ex_doc, "~> 0.29.3", only: [:dev], runtime: false},
+      {:credo, "~> 1.7", only: [:dev], runtime: false}
     ]
   end
 end
