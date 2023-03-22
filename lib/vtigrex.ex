@@ -54,6 +54,24 @@ defmodule Vtigrex do
     |> parse_result()
   end
 
+  @doc """
+  Creates a new record.
+  """
+  @spec create(Tesla.Client.t(), String.t(), map()) ::
+          {:ok, map()} | {:error, String.t() | Jason.EncodeError.t() | Exception.t()}
+  def create(client, element_type, %{} = element) do
+    with {:ok, element} <- Jason.encode(element) do
+      client
+      |> Tesla.get("/create",
+        query: [
+          elementType: element_type,
+          element: element
+        ]
+      )
+      |> parse_result()
+    end
+  end
+
   defp parse_result(
          {:ok, %Tesla.Env{status: 200, body: %{"success" => true, "result" => result}}}
        ) do
