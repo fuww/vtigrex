@@ -44,8 +44,18 @@ defmodule Vtigrex do
     |> parse_result()
   end
 
+  @doc """
+  Runs a query and returns its results.
+  """
+  @spec query(Tesla.Client.t(), String.t()) :: {:ok, list()} | {:error, String.t()}
+  def query(client, query) do
+    client
+    |> Tesla.get("/query", query: [query: query])
+    |> parse_result()
+  end
+
   defp parse_result(
-         {:ok, %Tesla.Env{status: 200, body: %{"success" => true, "result" => %{} = result}}}
+         {:ok, %Tesla.Env{status: 200, body: %{"success" => true, "result" => result}}}
        ) do
     {:ok, result}
   end

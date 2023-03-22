@@ -188,4 +188,29 @@ defmodule VtigrexTest do
                 "userlabel" => "Jan de Jong"
               }}
   end
+
+  test "runs a query", context do
+    Tesla.Mock.mock(fn
+      %{
+        method: :get,
+        url: "https://example.odx.vtiger.com/restapi/v1/vtiger/default/query",
+        query: [
+          query: "select id from Accounts where account_no = 'ACC12345' limit 1;"
+        ]
+      } ->
+        %Tesla.Env{
+          status: 200,
+          body: %{
+            "success" => true,
+            "result" => [%{"id" => "3x123456"}]
+          }
+        }
+    end)
+
+    assert Vtigrex.query(
+             context[:client],
+             "select id from Accounts where account_no = 'ACC12345' limit 1;"
+           ) ==
+             {:ok, [%{"id" => "3x123456"}]}
+  end
 end
