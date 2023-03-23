@@ -85,6 +85,16 @@ defmodule Vtigrex do
   end
 
   @doc """
+  Retrieves a record.
+  """
+  @spec retrieve(Tesla.Client.t(), String.t()) :: {:ok, map()} | {:error, String.t()}
+  def retrieve(client, id) do
+    client
+    |> Tesla.get("/retrieve", query: [id: id])
+    |> parse_result()
+  end
+
+  @doc """
   Creates a new record.
   """
   @spec create(Tesla.Client.t(), String.t(), map()) ::

@@ -1595,6 +1595,79 @@ defmodule VtigrexTest do
              {:ok, [%{"id" => "3x123456"}]}
   end
 
+  test "retrieves a record", context do
+    Tesla.Mock.mock(fn
+      %{
+        method: :get,
+        url: "https://example.odx.vtiger.com/restapi/v1/vtiger/default/retrieve",
+        query: [
+          id: "28x1234567"
+        ]
+      } ->
+        %Tesla.Env{
+          status: 200,
+          body: %{
+            "success" => true,
+            "result" => %{
+              "commentcontent" => "hello",
+              "customer" => "",
+              "userid" => "19x12345",
+              "reasontoedit" => "",
+              "is_private" => "0",
+              "customer_email" => "",
+              "from_mailroom" => "0",
+              "filename" => "",
+              "related_email_id" => "0",
+              "status" => "0",
+              "source" => "WEBSERVICE",
+              "isstickynote" => "0",
+              "assigned_user_id" => "19x12345",
+              "related_to" => "3x123456",
+              "creator" => "19x12345",
+              "createdtime" => "2023-03-22 16:18:02",
+              "modifiedtime" => "2023-03-22 16:18:02",
+              "parent_comments" => "",
+              "id" => "28x1234567",
+              "isclosed" => 0,
+              "label" => "test",
+              "url" => "https://example.odx.vtiger.com/view/detail?module=ModComments&id=1234567"
+            }
+          }
+        }
+    end)
+
+    assert Vtigrex.retrieve(
+             context[:client],
+             "28x1234567"
+           ) ==
+             {:ok,
+              %{
+                "commentcontent" => "hello",
+                "customer" => "",
+                "userid" => "19x12345",
+                "reasontoedit" => "",
+                "is_private" => "0",
+                "customer_email" => "",
+                "from_mailroom" => "0",
+                "filename" => "",
+                "related_email_id" => "0",
+                "status" => "0",
+                "source" => "WEBSERVICE",
+                "isstickynote" => "0",
+                "assigned_user_id" => "19x12345",
+                "related_to" => "3x123456",
+                "creator" => "19x12345",
+                "createdtime" => "2023-03-22 16:18:02",
+                "modifiedtime" => "2023-03-22 16:18:02",
+                "parent_comments" => "",
+                "id" => "28x1234567",
+                "isclosed" => 0,
+                "label" => "test",
+                "url" =>
+                  "https://example.odx.vtiger.com/view/detail?module=ModComments&id=1234567"
+              }}
+  end
+
   test "creates a record", context do
     Tesla.Mock.mock(fn
       %{
