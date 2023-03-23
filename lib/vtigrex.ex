@@ -100,11 +100,12 @@ defmodule Vtigrex do
   def create(client, element_type, %{} = element) do
     with {:ok, element} <- Jason.encode(element) do
       client
-      |> Tesla.get("/create",
-        query: [
+      |> Tesla.post(
+        "/create",
+        %{
           elementType: element_type,
           element: element
-        ]
+        }
       )
       |> parse_result()
     end
@@ -119,10 +120,11 @@ defmodule Vtigrex do
   def update(client, id, %{} = element) do
     with {:ok, element} <- element |> Map.put("id", id) |> Jason.encode() do
       client
-      |> Tesla.get("/update",
-        query: [
+      |> Tesla.post(
+        "/update",
+        %{
           element: element
-        ]
+        }
       )
       |> parse_result()
     end
@@ -137,10 +139,11 @@ defmodule Vtigrex do
   def revise(client, id, %{} = element) do
     with {:ok, element} <- element |> Map.put("id", id) |> Jason.encode() do
       client
-      |> Tesla.get("/revise",
-        query: [
+      |> Tesla.post(
+        "/revise",
+        %{
           element: element
-        ]
+        }
       )
       |> parse_result()
     end
@@ -152,10 +155,11 @@ defmodule Vtigrex do
   @spec delete(Tesla.Client.t(), String.t()) :: {:ok, map()} | {:error, any()}
   def delete(client, id) do
     client
-    |> Tesla.get("/delete",
-      query: [
+    |> Tesla.post(
+      "/delete",
+      %{
         id: id
-      ]
+      }
     )
     |> parse_result()
   end

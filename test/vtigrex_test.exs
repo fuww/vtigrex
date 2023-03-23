@@ -1684,13 +1684,10 @@ defmodule VtigrexTest do
   test "creates a record", context do
     Tesla.Mock.mock(fn
       %{
-        method: :get,
+        method: :post,
         url: "https://example.odx.vtiger.com/restapi/v1/vtiger/default/create",
-        query: [
-          elementType: "ModComments",
-          element:
-            ~s({"assigned_user_id":"19x12345","commentcontent":"hello","related_to":"3x123456"})
-        ]
+        body:
+          "{\"element\":\"{\\\"assigned_user_id\\\":\\\"19x12345\\\",\\\"commentcontent\\\":\\\"hello\\\",\\\"related_to\\\":\\\"3x123456\\\"}\",\"elementType\":\"ModComments\"}"
       } ->
         %Tesla.Env{
           status: 200,
@@ -1764,12 +1761,10 @@ defmodule VtigrexTest do
   test "updates a record", context do
     Tesla.Mock.mock(fn
       %{
-        method: :get,
+        method: :post,
         url: "https://example.odx.vtiger.com/restapi/v1/vtiger/default/update",
-        query: [
-          element:
-            ~s({"assigned_user_id":"19x12345","commentcontent":"hello","id":"28x1234567","related_to":"3x123456"})
-        ]
+        body:
+          "{\"element\":\"{\\\"assigned_user_id\\\":\\\"19x12345\\\",\\\"commentcontent\\\":\\\"hello\\\",\\\"id\\\":\\\"28x1234567\\\",\\\"related_to\\\":\\\"3x123456\\\"}\"}"
       } ->
         %Tesla.Env{
           status: 200,
@@ -1843,11 +1838,10 @@ defmodule VtigrexTest do
   test "handles errors while updating a record", context do
     Tesla.Mock.mock(fn
       %{
-        method: :get,
+        method: :post,
         url: "https://example.odx.vtiger.com/restapi/v1/vtiger/default/update",
-        query: [
-          element: ~s({"commentcontent":"hello","id":"28x1234567"})
-        ]
+        body:
+          "{\"element\":\"{\\\"commentcontent\\\":\\\"hello\\\",\\\"id\\\":\\\"28x1234567\\\"}\"}"
       } ->
         %Tesla.Env{
           status: 400,
@@ -1867,11 +1861,10 @@ defmodule VtigrexTest do
   test "updates a record with revise", context do
     Tesla.Mock.mock(fn
       %{
-        method: :get,
+        method: :post,
         url: "https://example.odx.vtiger.com/restapi/v1/vtiger/default/revise",
-        query: [
-          element: ~s({"commentcontent":"hello","id":"28x1234567"})
-        ]
+        body:
+          "{\"element\":\"{\\\"commentcontent\\\":\\\"hello\\\",\\\"id\\\":\\\"28x1234567\\\"}\"}"
       } ->
         %Tesla.Env{
           status: 200,
@@ -1943,11 +1936,9 @@ defmodule VtigrexTest do
   test "deletes a record", context do
     Tesla.Mock.mock(fn
       %{
-        method: :get,
+        method: :post,
         url: "https://example.odx.vtiger.com/restapi/v1/vtiger/default/delete",
-        query: [
-          id: "28x1234567"
-        ]
+        body: "{\"id\":\"28x1234567\"}"
       } ->
         %Tesla.Env{
           status: 200,
