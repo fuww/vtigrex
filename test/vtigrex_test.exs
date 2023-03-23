@@ -1747,4 +1747,182 @@ defmodule VtigrexTest do
                   "https://example.odx.vtiger.com/view/detail?module=ModComments&id=1234567"
               }}
   end
+
+  test "updates a record", context do
+    Tesla.Mock.mock(fn
+      %{
+        method: :get,
+        url: "https://example.odx.vtiger.com/restapi/v1/vtiger/default/update",
+        query: [
+          element:
+            ~s({"assigned_user_id":"19x12345","commentcontent":"hello","id":"28x1234567","related_to":"3x123456"})
+        ]
+      } ->
+        %Tesla.Env{
+          status: 200,
+          body: %{
+            "success" => true,
+            "result" => %{
+              "commentcontent" => "hello",
+              "customer" => "",
+              "userid" => "19x12345",
+              "reasontoedit" => "",
+              "is_private" => "0",
+              "customer_email" => "",
+              "from_mailroom" => "0",
+              "filename" => "",
+              "related_email_id" => "0",
+              "status" => "0",
+              "source" => "WEBSERVICE",
+              "isstickynote" => "0",
+              "assigned_user_id" => "19x12345",
+              "related_to" => "3x123456",
+              "creator" => "19x12345",
+              "createdtime" => "2023-03-22 16:18:02",
+              "modifiedtime" => "2023-03-22 16:18:02",
+              "parent_comments" => "",
+              "id" => "28x1234567",
+              "isclosed" => 0,
+              "label" => "test",
+              "url" => "https://example.odx.vtiger.com/view/detail?module=ModComments&id=1234567"
+            }
+          }
+        }
+    end)
+
+    assert Vtigrex.update(
+             context[:client],
+             "28x1234567",
+             %{
+               "commentcontent" => "hello",
+               "related_to" => "3x123456",
+               "assigned_user_id" => "19x12345"
+             }
+           ) ==
+             {:ok,
+              %{
+                "commentcontent" => "hello",
+                "customer" => "",
+                "userid" => "19x12345",
+                "reasontoedit" => "",
+                "is_private" => "0",
+                "customer_email" => "",
+                "from_mailroom" => "0",
+                "filename" => "",
+                "related_email_id" => "0",
+                "status" => "0",
+                "source" => "WEBSERVICE",
+                "isstickynote" => "0",
+                "assigned_user_id" => "19x12345",
+                "related_to" => "3x123456",
+                "creator" => "19x12345",
+                "createdtime" => "2023-03-22 16:18:02",
+                "modifiedtime" => "2023-03-22 16:18:02",
+                "parent_comments" => "",
+                "id" => "28x1234567",
+                "isclosed" => 0,
+                "label" => "test",
+                "url" =>
+                  "https://example.odx.vtiger.com/view/detail?module=ModComments&id=1234567"
+              }}
+  end
+
+  test "handles errors while updating a record", context do
+    Tesla.Mock.mock(fn
+      %{
+        method: :get,
+        url: "https://example.odx.vtiger.com/restapi/v1/vtiger/default/update",
+        query: [
+          element: ~s({"commentcontent":"hello","id":"28x1234567"})
+        ]
+      } ->
+        %Tesla.Env{
+          status: 400
+        }
+    end)
+
+    assert Vtigrex.update(
+             context[:client],
+             "28x1234567",
+             %{
+               "commentcontent" => "hello"
+             }
+           ) == {:error, "Bad Request"}
+  end
+
+  test "updates a record with revise", context do
+    Tesla.Mock.mock(fn
+      %{
+        method: :get,
+        url: "https://example.odx.vtiger.com/restapi/v1/vtiger/default/revise",
+        query: [
+          element: ~s({"commentcontent":"hello","id":"28x1234567"})
+        ]
+      } ->
+        %Tesla.Env{
+          status: 200,
+          body: %{
+            "success" => true,
+            "result" => %{
+              "commentcontent" => "hello",
+              "customer" => "",
+              "userid" => "19x12345",
+              "reasontoedit" => "",
+              "is_private" => "0",
+              "customer_email" => "",
+              "from_mailroom" => "0",
+              "filename" => "",
+              "related_email_id" => "0",
+              "status" => "0",
+              "source" => "WEBSERVICE",
+              "isstickynote" => "0",
+              "assigned_user_id" => "19x12345",
+              "related_to" => "3x123456",
+              "creator" => "19x12345",
+              "createdtime" => "2023-03-22 16:18:02",
+              "modifiedtime" => "2023-03-22 16:18:02",
+              "parent_comments" => "",
+              "id" => "28x1234567",
+              "isclosed" => 0,
+              "label" => "test",
+              "url" => "https://example.odx.vtiger.com/view/detail?module=ModComments&id=1234567"
+            }
+          }
+        }
+    end)
+
+    assert Vtigrex.revise(
+             context[:client],
+             "28x1234567",
+             %{
+               "commentcontent" => "hello"
+             }
+           ) ==
+             {:ok,
+              %{
+                "commentcontent" => "hello",
+                "customer" => "",
+                "userid" => "19x12345",
+                "reasontoedit" => "",
+                "is_private" => "0",
+                "customer_email" => "",
+                "from_mailroom" => "0",
+                "filename" => "",
+                "related_email_id" => "0",
+                "status" => "0",
+                "source" => "WEBSERVICE",
+                "isstickynote" => "0",
+                "assigned_user_id" => "19x12345",
+                "related_to" => "3x123456",
+                "creator" => "19x12345",
+                "createdtime" => "2023-03-22 16:18:02",
+                "modifiedtime" => "2023-03-22 16:18:02",
+                "parent_comments" => "",
+                "id" => "28x1234567",
+                "isclosed" => 0,
+                "label" => "test",
+                "url" =>
+                  "https://example.odx.vtiger.com/view/detail?module=ModComments&id=1234567"
+              }}
+  end
 end

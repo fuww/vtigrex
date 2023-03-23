@@ -112,10 +112,52 @@ defmodule Vtigrex do
     end
   end
 
+  @doc """
+  Updates an existing record.
+
+  All the mandatory fields need to be specified.
+  """
+  @spec update(Tesla.Client.t(), String.t(), map()) ::
+          {:ok, map()} | {:error, String.t() | Jason.EncodeError.t() | Exception.t()}
+  def update(client, id, %{} = element) do
+    with {:ok, element} <- element |> Map.put("id", id) |> Jason.encode() do
+      client
+      |> Tesla.get("/update",
+        query: [
+          element: element
+        ]
+      )
+      |> parse_result()
+    end
+  end
+
+  @doc """
+  Updates an existing record.
+
+  It relaxes the constraint that all mandatory fields need to be specified.
+  """
+  @spec revise(Tesla.Client.t(), String.t(), map()) ::
+          {:ok, map()} | {:error, String.t() | Jason.EncodeError.t() | Exception.t()}
+  def revise(client, id, %{} = element) do
+    with {:ok, element} <- element |> Map.put("id", id) |> Jason.encode() do
+      client
+      |> Tesla.get("/revise",
+        query: [
+          element: element
+        ]
+      )
+      |> parse_result()
+    end
+  end
+
   defp parse_result(
          {:ok, %Tesla.Env{status: 200, body: %{"success" => true, "result" => result}}}
        ) do
     {:ok, result}
+  end
+
+  defp parse_result({:ok, %Tesla.Env{status: 400}}) do
+    {:error, "Bad Request"}
   end
 
   defp parse_result({:ok, %Tesla.Env{status: 401}}) do
