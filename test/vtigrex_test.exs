@@ -1925,4 +1925,30 @@ defmodule VtigrexTest do
                   "https://example.odx.vtiger.com/view/detail?module=ModComments&id=1234567"
               }}
   end
+
+  test "deletes a record", context do
+    Tesla.Mock.mock(fn
+      %{
+        method: :get,
+        url: "https://example.odx.vtiger.com/restapi/v1/vtiger/default/delete",
+        query: [
+          id: "28x1234567"
+        ]
+      } ->
+        %Tesla.Env{
+          status: 200,
+          body: %{
+            "success" => true,
+            "result" => %{
+              "status" => "successful"
+            }
+          }
+        }
+    end)
+
+    assert Vtigrex.delete(
+             context[:client],
+             "28x1234567"
+           ) == {:ok, %{"status" => "successful"}}
+  end
 end

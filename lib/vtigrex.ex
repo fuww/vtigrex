@@ -150,6 +150,20 @@ defmodule Vtigrex do
     end
   end
 
+  @doc """
+  Deletes a record.
+  """
+  @spec delete(Tesla.Client.t(), String.t()) :: {:ok, map()} | {:error, String.t()}
+  def delete(client, id) do
+    client
+    |> Tesla.get("/delete",
+      query: [
+        id: id
+      ]
+    )
+    |> parse_result()
+  end
+
   defp parse_result(
          {:ok, %Tesla.Env{status: 200, body: %{"success" => true, "result" => result}}}
        ) do
