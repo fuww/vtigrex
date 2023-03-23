@@ -45,6 +45,21 @@ defmodule Vtigrex do
   end
 
   @doc """
+  Lists types.
+  """
+  @spec list_types(Tesla.Client.t(), nil | [String.t()]) ::
+          {:ok, map()} | {:error, String.t()}
+  def list_types(client, field_type_list \\ nil) do
+    client
+    |> Tesla.get("/listtypes",
+      query: [
+        fieldTypeList: field_type_list || "null"
+      ]
+    )
+    |> parse_result()
+  end
+
+  @doc """
   Runs a query and returns its results.
   """
   @spec query(Tesla.Client.t(), String.t()) :: {:ok, list()} | {:error, String.t()}

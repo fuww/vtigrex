@@ -189,6 +189,684 @@ defmodule VtigrexTest do
               }}
   end
 
+  test "lists all types", context do
+    Tesla.Mock.mock(fn
+      %{
+        method: :get,
+        url: "https://example.odx.vtiger.com/restapi/v1/vtiger/default/listtypes",
+        query: [
+          fieldTypeList: "null"
+        ]
+      } ->
+        %Tesla.Env{
+          status: 200,
+          body: %{
+            "success" => true,
+            "result" => %{
+              "information" => %{
+                "InternalTickets" => %{
+                  "isEntity" => true,
+                  "label" => "Internal Tickets",
+                  "singular" => "Internal Ticket"
+                },
+                "Users" => %{"isEntity" => true, "label" => "Users", "singular" => "User"},
+                "Groups" => %{
+                  "isEntity" => false,
+                  "label" => "Groups",
+                  "singular" => "Groups"
+                },
+                "EventForms" => %{
+                  "isEntity" => true,
+                  "label" => "Appointment Pages",
+                  "singular" => "Appointment Page"
+                },
+                "Emails" => %{
+                  "isEntity" => true,
+                  "label" => "Emails",
+                  "singular" => "Email"
+                },
+                "EmailTemplates" => %{
+                  "isEntity" => true,
+                  "label" => "Email Templates",
+                  "singular" => "Email Template"
+                },
+                "CompanyDetails" => %{
+                  "isEntity" => false,
+                  "label" => "CompanyDetails",
+                  "singular" => "CompanyDetails"
+                },
+                "PriceBooks" => %{
+                  "isEntity" => true,
+                  "label" => "Price Books",
+                  "singular" => "Price Book"
+                },
+                "Import" => %{
+                  "isEntity" => true,
+                  "label" => "Import",
+                  "singular" => "Import"
+                },
+                "ModComments" => %{
+                  "isEntity" => true,
+                  "label" => "Comments",
+                  "singular" => "Comment"
+                },
+                "Services" => %{
+                  "isEntity" => true,
+                  "label" => "Services",
+                  "singular" => "Service"
+                },
+                "Forecast" => %{
+                  "isEntity" => true,
+                  "label" => "Forecast and Quota",
+                  "singular" => "SINGLE_Forecast"
+                },
+                "WatchPoints" => %{
+                  "isEntity" => true,
+                  "label" => "WatchPoints",
+                  "singular" => "SINGLE_WatchPoints"
+                },
+                "ServiceContracts" => %{
+                  "isEntity" => true,
+                  "label" => "Service Contracts",
+                  "singular" => "Service Contract"
+                },
+                "Invoice" => %{
+                  "isEntity" => true,
+                  "label" => "Invoices",
+                  "singular" => "Invoice"
+                },
+                "Inbox" => %{
+                  "isEntity" => true,
+                  "label" => "Inbox",
+                  "singular" => "SINGLE_Inbox"
+                },
+                "Tax" => %{"isEntity" => false, "label" => "Tax", "singular" => "Tax"},
+                "Employees" => %{
+                  "isEntity" => true,
+                  "label" => "Employees",
+                  "singular" => "Employee"
+                },
+                "Quotes" => %{
+                  "isEntity" => true,
+                  "label" => "Quotes",
+                  "singular" => "Quote"
+                },
+                "WorkOrders" => %{
+                  "isEntity" => true,
+                  "label" => "Work Orders",
+                  "singular" => "Work Order"
+                },
+                "vtcmcustommodule" => %{
+                  "isEntity" => true,
+                  "label" => "Custom Module ",
+                  "singular" => "Custom Module "
+                },
+                "Currency" => %{
+                  "isEntity" => false,
+                  "label" => "Currency",
+                  "singular" => "Currency"
+                },
+                "SalesOrder" => %{
+                  "isEntity" => true,
+                  "label" => "Sales Orders",
+                  "singular" => "Sales Order"
+                },
+                "Potentials" => %{
+                  "isEntity" => true,
+                  "label" => "Opportunities",
+                  "singular" => "Opportunity"
+                },
+                "Emotions" => %{
+                  "isEntity" => true,
+                  "label" => "Emotions",
+                  "singular" => "SINGLE_Emotions"
+                },
+                "vtcmcomments" => %{
+                  "isEntity" => true,
+                  "label" => "Comments",
+                  "singular" => "Comment"
+                },
+                "Contacts" => %{
+                  "isEntity" => true,
+                  "label" => "Contacts",
+                  "singular" => "Contact"
+                },
+                "Accounts" => %{
+                  "isEntity" => true,
+                  "label" => "Organizations",
+                  "singular" => "Organization"
+                },
+                "Reviews" => %{
+                  "isEntity" => true,
+                  "label" => "Reviews",
+                  "singular" => "SINGLE_Reviews"
+                },
+                "WebPages" => %{
+                  "isEntity" => true,
+                  "label" => "Landing Pages",
+                  "singular" => "Landing Page"
+                },
+                "ProcessDesigner" => %{
+                  "isEntity" => true,
+                  "label" => "Process Designer",
+                  "singular" => "Process"
+                },
+                "Documents" => %{
+                  "isEntity" => true,
+                  "label" => "Documents",
+                  "singular" => "Document"
+                },
+                "PhoneCalls" => %{
+                  "isEntity" => true,
+                  "label" => "Phone Calls",
+                  "singular" => "Phone Call"
+                },
+                "EmailSequence" => %{
+                  "isEntity" => true,
+                  "label" => "Email Sequences",
+                  "singular" => "Email Sequence"
+                },
+                "LineItem" => %{
+                  "isEntity" => false,
+                  "label" => "LineItem",
+                  "singular" => "LineItem"
+                },
+                "JourneyTemplates" => %{
+                  "isEntity" => true,
+                  "label" => "Playbooks",
+                  "singular" => "Playbook"
+                },
+                "Calendar" => %{
+                  "isEntity" => true,
+                  "label" => "Calendar",
+                  "singular" => "Task"
+                },
+                "PrintTemplates" => %{
+                  "isEntity" => true,
+                  "label" => "Print Templates",
+                  "singular" => "Print Template"
+                },
+                "DocumentFolders" => %{
+                  "isEntity" => false,
+                  "label" => "DocumentFolders",
+                  "singular" => "DocumentFolders"
+                },
+                "Reactions" => %{
+                  "isEntity" => true,
+                  "label" => "Reactions",
+                  "singular" => "SINGLE_Reactions"
+                },
+                "ProductTaxes" => %{
+                  "isEntity" => false,
+                  "label" => "ProductTaxes",
+                  "singular" => "ProductTaxes"
+                },
+                "Events" => %{
+                  "isEntity" => true,
+                  "label" => "Events",
+                  "singular" => "Event"
+                },
+                "Approvals" => %{
+                  "isEntity" => true,
+                  "label" => "Approvals",
+                  "singular" => "Approval"
+                },
+                "Roles" => %{
+                  "isEntity" => false,
+                  "label" => "Roles",
+                  "singular" => "Roles"
+                },
+                "Campaigns" => %{
+                  "isEntity" => true,
+                  "label" => "Campaigns",
+                  "singular" => "Campaign"
+                }
+              },
+              "types" => [
+                "Calendar",
+                "Accounts",
+                "Contacts",
+                "Potentials",
+                "Documents",
+                "Emails",
+                "PriceBooks",
+                "Quotes",
+                "SalesOrder",
+                "Invoice",
+                "Campaigns",
+                "Events",
+                "Users",
+                "ServiceContracts",
+                "Services",
+                "ModComments",
+                "PrintTemplates",
+                "EventForms",
+                "Inbox",
+                "Approvals",
+                "vtcmcustommodule",
+                "Employees",
+                "InternalTickets",
+                "WorkOrders",
+                "Forecast",
+                "vtcmcomments",
+                "Reactions",
+                "EmailTemplates",
+                "JourneyTemplates",
+                "Emotions",
+                "EmailSequence",
+                "PhoneCalls",
+                "Import",
+                "Reviews",
+                "WatchPoints",
+                "WebPages",
+                "ProcessDesigner",
+                "Groups",
+                "Currency",
+                "DocumentFolders",
+                "CompanyDetails",
+                "LineItem",
+                "Tax",
+                "ProductTaxes",
+                "Roles"
+              ]
+            }
+          }
+        }
+    end)
+
+    assert Vtigrex.list_types(context[:client]) ==
+             {:ok,
+              %{
+                "information" => %{
+                  "InternalTickets" => %{
+                    "isEntity" => true,
+                    "label" => "Internal Tickets",
+                    "singular" => "Internal Ticket"
+                  },
+                  "Users" => %{"isEntity" => true, "label" => "Users", "singular" => "User"},
+                  "Groups" => %{
+                    "isEntity" => false,
+                    "label" => "Groups",
+                    "singular" => "Groups"
+                  },
+                  "EventForms" => %{
+                    "isEntity" => true,
+                    "label" => "Appointment Pages",
+                    "singular" => "Appointment Page"
+                  },
+                  "Emails" => %{
+                    "isEntity" => true,
+                    "label" => "Emails",
+                    "singular" => "Email"
+                  },
+                  "EmailTemplates" => %{
+                    "isEntity" => true,
+                    "label" => "Email Templates",
+                    "singular" => "Email Template"
+                  },
+                  "CompanyDetails" => %{
+                    "isEntity" => false,
+                    "label" => "CompanyDetails",
+                    "singular" => "CompanyDetails"
+                  },
+                  "PriceBooks" => %{
+                    "isEntity" => true,
+                    "label" => "Price Books",
+                    "singular" => "Price Book"
+                  },
+                  "Import" => %{
+                    "isEntity" => true,
+                    "label" => "Import",
+                    "singular" => "Import"
+                  },
+                  "ModComments" => %{
+                    "isEntity" => true,
+                    "label" => "Comments",
+                    "singular" => "Comment"
+                  },
+                  "Services" => %{
+                    "isEntity" => true,
+                    "label" => "Services",
+                    "singular" => "Service"
+                  },
+                  "Forecast" => %{
+                    "isEntity" => true,
+                    "label" => "Forecast and Quota",
+                    "singular" => "SINGLE_Forecast"
+                  },
+                  "WatchPoints" => %{
+                    "isEntity" => true,
+                    "label" => "WatchPoints",
+                    "singular" => "SINGLE_WatchPoints"
+                  },
+                  "ServiceContracts" => %{
+                    "isEntity" => true,
+                    "label" => "Service Contracts",
+                    "singular" => "Service Contract"
+                  },
+                  "Invoice" => %{
+                    "isEntity" => true,
+                    "label" => "Invoices",
+                    "singular" => "Invoice"
+                  },
+                  "Inbox" => %{
+                    "isEntity" => true,
+                    "label" => "Inbox",
+                    "singular" => "SINGLE_Inbox"
+                  },
+                  "Tax" => %{"isEntity" => false, "label" => "Tax", "singular" => "Tax"},
+                  "Employees" => %{
+                    "isEntity" => true,
+                    "label" => "Employees",
+                    "singular" => "Employee"
+                  },
+                  "Quotes" => %{
+                    "isEntity" => true,
+                    "label" => "Quotes",
+                    "singular" => "Quote"
+                  },
+                  "WorkOrders" => %{
+                    "isEntity" => true,
+                    "label" => "Work Orders",
+                    "singular" => "Work Order"
+                  },
+                  "vtcmcustommodule" => %{
+                    "isEntity" => true,
+                    "label" => "Custom Module ",
+                    "singular" => "Custom Module "
+                  },
+                  "Currency" => %{
+                    "isEntity" => false,
+                    "label" => "Currency",
+                    "singular" => "Currency"
+                  },
+                  "SalesOrder" => %{
+                    "isEntity" => true,
+                    "label" => "Sales Orders",
+                    "singular" => "Sales Order"
+                  },
+                  "Potentials" => %{
+                    "isEntity" => true,
+                    "label" => "Opportunities",
+                    "singular" => "Opportunity"
+                  },
+                  "Emotions" => %{
+                    "isEntity" => true,
+                    "label" => "Emotions",
+                    "singular" => "SINGLE_Emotions"
+                  },
+                  "vtcmcomments" => %{
+                    "isEntity" => true,
+                    "label" => "Comments",
+                    "singular" => "Comment"
+                  },
+                  "Contacts" => %{
+                    "isEntity" => true,
+                    "label" => "Contacts",
+                    "singular" => "Contact"
+                  },
+                  "Accounts" => %{
+                    "isEntity" => true,
+                    "label" => "Organizations",
+                    "singular" => "Organization"
+                  },
+                  "Reviews" => %{
+                    "isEntity" => true,
+                    "label" => "Reviews",
+                    "singular" => "SINGLE_Reviews"
+                  },
+                  "WebPages" => %{
+                    "isEntity" => true,
+                    "label" => "Landing Pages",
+                    "singular" => "Landing Page"
+                  },
+                  "ProcessDesigner" => %{
+                    "isEntity" => true,
+                    "label" => "Process Designer",
+                    "singular" => "Process"
+                  },
+                  "Documents" => %{
+                    "isEntity" => true,
+                    "label" => "Documents",
+                    "singular" => "Document"
+                  },
+                  "PhoneCalls" => %{
+                    "isEntity" => true,
+                    "label" => "Phone Calls",
+                    "singular" => "Phone Call"
+                  },
+                  "EmailSequence" => %{
+                    "isEntity" => true,
+                    "label" => "Email Sequences",
+                    "singular" => "Email Sequence"
+                  },
+                  "LineItem" => %{
+                    "isEntity" => false,
+                    "label" => "LineItem",
+                    "singular" => "LineItem"
+                  },
+                  "JourneyTemplates" => %{
+                    "isEntity" => true,
+                    "label" => "Playbooks",
+                    "singular" => "Playbook"
+                  },
+                  "Calendar" => %{
+                    "isEntity" => true,
+                    "label" => "Calendar",
+                    "singular" => "Task"
+                  },
+                  "PrintTemplates" => %{
+                    "isEntity" => true,
+                    "label" => "Print Templates",
+                    "singular" => "Print Template"
+                  },
+                  "DocumentFolders" => %{
+                    "isEntity" => false,
+                    "label" => "DocumentFolders",
+                    "singular" => "DocumentFolders"
+                  },
+                  "Reactions" => %{
+                    "isEntity" => true,
+                    "label" => "Reactions",
+                    "singular" => "SINGLE_Reactions"
+                  },
+                  "ProductTaxes" => %{
+                    "isEntity" => false,
+                    "label" => "ProductTaxes",
+                    "singular" => "ProductTaxes"
+                  },
+                  "Events" => %{
+                    "isEntity" => true,
+                    "label" => "Events",
+                    "singular" => "Event"
+                  },
+                  "Approvals" => %{
+                    "isEntity" => true,
+                    "label" => "Approvals",
+                    "singular" => "Approval"
+                  },
+                  "Roles" => %{
+                    "isEntity" => false,
+                    "label" => "Roles",
+                    "singular" => "Roles"
+                  },
+                  "Campaigns" => %{
+                    "isEntity" => true,
+                    "label" => "Campaigns",
+                    "singular" => "Campaign"
+                  }
+                },
+                "types" => [
+                  "Calendar",
+                  "Accounts",
+                  "Contacts",
+                  "Potentials",
+                  "Documents",
+                  "Emails",
+                  "PriceBooks",
+                  "Quotes",
+                  "SalesOrder",
+                  "Invoice",
+                  "Campaigns",
+                  "Events",
+                  "Users",
+                  "ServiceContracts",
+                  "Services",
+                  "ModComments",
+                  "PrintTemplates",
+                  "EventForms",
+                  "Inbox",
+                  "Approvals",
+                  "vtcmcustommodule",
+                  "Employees",
+                  "InternalTickets",
+                  "WorkOrders",
+                  "Forecast",
+                  "vtcmcomments",
+                  "Reactions",
+                  "EmailTemplates",
+                  "JourneyTemplates",
+                  "Emotions",
+                  "EmailSequence",
+                  "PhoneCalls",
+                  "Import",
+                  "Reviews",
+                  "WatchPoints",
+                  "WebPages",
+                  "ProcessDesigner",
+                  "Groups",
+                  "Currency",
+                  "DocumentFolders",
+                  "CompanyDetails",
+                  "LineItem",
+                  "Tax",
+                  "ProductTaxes",
+                  "Roles"
+                ]
+              }}
+  end
+
+  test "lists modules with a certain type of field", context do
+    Tesla.Mock.mock(fn
+      %{
+        method: :get,
+        url: "https://example.odx.vtiger.com/restapi/v1/vtiger/default/listtypes",
+        query: [
+          fieldTypeList: ["Email"]
+        ]
+      } ->
+        %Tesla.Env{
+          status: 200,
+          body: %{
+            "success" => true,
+            "result" => %{
+              "information" => %{
+                "Accounts" => %{
+                  "isEntity" => true,
+                  "label" => "Organizations",
+                  "singular" => "Organization"
+                },
+                "Contacts" => %{
+                  "isEntity" => true,
+                  "label" => "Contacts",
+                  "singular" => "Contact"
+                },
+                "Employees" => %{
+                  "isEntity" => true,
+                  "label" => "Employees",
+                  "singular" => "Employee"
+                },
+                "InternalTickets" => %{
+                  "isEntity" => true,
+                  "label" => "Internal Tickets",
+                  "singular" => "Internal Ticket"
+                },
+                "ModComments" => %{
+                  "isEntity" => true,
+                  "label" => "Comments",
+                  "singular" => "Comment"
+                },
+                "Potentials" => %{
+                  "isEntity" => true,
+                  "label" => "Opportunities",
+                  "singular" => "Opportunity"
+                },
+                "SalesOrder" => %{
+                  "isEntity" => true,
+                  "label" => "Sales Orders",
+                  "singular" => "Sales Order"
+                },
+                "Users" => %{"isEntity" => true, "label" => "Users", "singular" => "User"}
+              },
+              "types" => [
+                "Accounts",
+                "Contacts",
+                "Potentials",
+                "SalesOrder",
+                "Users",
+                "ModComments",
+                "Employees",
+                "InternalTickets"
+              ]
+            }
+          }
+        }
+    end)
+
+    assert Vtigrex.list_types(context[:client], ["Email"]) ==
+             {:ok,
+              %{
+                "information" => %{
+                  "Accounts" => %{
+                    "isEntity" => true,
+                    "label" => "Organizations",
+                    "singular" => "Organization"
+                  },
+                  "Contacts" => %{
+                    "isEntity" => true,
+                    "label" => "Contacts",
+                    "singular" => "Contact"
+                  },
+                  "Employees" => %{
+                    "isEntity" => true,
+                    "label" => "Employees",
+                    "singular" => "Employee"
+                  },
+                  "InternalTickets" => %{
+                    "isEntity" => true,
+                    "label" => "Internal Tickets",
+                    "singular" => "Internal Ticket"
+                  },
+                  "ModComments" => %{
+                    "isEntity" => true,
+                    "label" => "Comments",
+                    "singular" => "Comment"
+                  },
+                  "Potentials" => %{
+                    "isEntity" => true,
+                    "label" => "Opportunities",
+                    "singular" => "Opportunity"
+                  },
+                  "SalesOrder" => %{
+                    "isEntity" => true,
+                    "label" => "Sales Orders",
+                    "singular" => "Sales Order"
+                  },
+                  "Users" => %{"isEntity" => true, "label" => "Users", "singular" => "User"}
+                },
+                "types" => [
+                  "Accounts",
+                  "Contacts",
+                  "Potentials",
+                  "SalesOrder",
+                  "Users",
+                  "ModComments",
+                  "Employees",
+                  "InternalTickets"
+                ]
+              }}
+  end
+
   test "runs a query", context do
     Tesla.Mock.mock(fn
       %{
