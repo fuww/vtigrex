@@ -1845,7 +1845,9 @@ defmodule VtigrexTest do
       } ->
         %Tesla.Env{
           status: 400,
-          headers: [{"x-http-reason-phrase", "Something went wrong"}]
+          headers: [
+            {"x-http-reason-phrase", "MANDATORY_FIELDS_MISSING:Assigned To does not have a value"}
+          ]
         }
     end)
 
@@ -1855,7 +1857,7 @@ defmodule VtigrexTest do
              %{
                "commentcontent" => "hello"
              }
-           ) == {:error, "Something went wrong"}
+           ) == {:error, "MANDATORY_FIELDS_MISSING:Assigned To does not have a value"}
   end
 
   test "updates a record with revise", context do
