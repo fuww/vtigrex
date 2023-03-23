@@ -60,6 +60,21 @@ defmodule Vtigrex do
   end
 
   @doc """
+  Describes a type.
+  """
+  @spec describe(Tesla.Client.t(), String.t()) ::
+          {:ok, map()} | {:error, String.t()}
+  def describe(client, element_type) do
+    client
+    |> Tesla.get("/describe",
+      query: [
+        elementType: element_type
+      ]
+    )
+    |> parse_result()
+  end
+
+  @doc """
   Runs a query and returns its results.
   """
   @spec query(Tesla.Client.t(), String.t()) :: {:ok, list()} | {:error, String.t()}
