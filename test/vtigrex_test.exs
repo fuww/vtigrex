@@ -7,7 +7,8 @@ defmodule VtigrexTest do
       Vtigrex.client(
         "https://example.odx.vtiger.com/restapi/v1/vtiger/default",
         "jandejong@example.nl",
-        "my4cc3sk3y"
+        "my4cc3sk3y",
+        Tesla.Mock
       )
 
     {:ok, client: client}
@@ -1849,7 +1850,8 @@ defmodule VtigrexTest do
         ]
       } ->
         %Tesla.Env{
-          status: 400
+          status: 400,
+          headers: [{"x-http-reason-phrase", "Something went wrong"}]
         }
     end)
 
@@ -1859,7 +1861,7 @@ defmodule VtigrexTest do
              %{
                "commentcontent" => "hello"
              }
-           ) == {:error, "Bad Request"}
+           ) == {:error, "Something went wrong"}
   end
 
   test "updates a record with revise", context do

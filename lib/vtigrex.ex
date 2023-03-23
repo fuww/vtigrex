@@ -14,6 +14,7 @@ defmodule Vtigrex do
       iex>   "y0ur4cc3sk3y"
       iex> )
       %Tesla.Client{
+        adapter: {Vtigrex.Adapter.HttpcWithReasonPhrase, :call, [[]]},
         pre: [
           {Tesla.Middleware.BaseUrl, :call, ["https://your_instance.odx.vtiger.com/restapi/v1/vtiger/default"]},
           {Tesla.Middleware.BasicAuth, :call, [[username: "your_user@your_host.com", password: "y0ur4cc3sk3y"]]},
@@ -22,16 +23,16 @@ defmodule Vtigrex do
       }
 
   """
-  @spec client(String.t(), String.t(), String.t()) ::
+  @spec client(String.t(), String.t(), String.t(), Tesla.Client.adapter()) ::
           Tesla.Client.t()
-  def client(base_url, username, access_key) do
+  def client(base_url, username, access_key, adapter \\ Vtigrex.Adapter.HttpcWithReasonPhrase) do
     middlewares = [
       {Tesla.Middleware.BaseUrl, base_url},
       {Tesla.Middleware.BasicAuth, username: username, password: access_key},
       {Tesla.Middleware.JSON, decode_content_types: ["text/json"]}
     ]
 
-    Tesla.client(middlewares)
+    Tesla.client(middlewares, adapter)
   end
 
   @doc """
@@ -165,12 +166,8 @@ defmodule Vtigrex do
     {:ok, result}
   end
 
-  defp parse_result({:ok, %Tesla.Env{status: 400}}) do
-    {:error, "Bad Request"}
-  end
-
-  defp parse_result({:ok, %Tesla.Env{status: 401}}) do
-    {:error, "Unauthorized"}
+  defp parse_result({:ok, %Tesla.Env{status: status} = env}) when status >= 400 do
+    {:error, Tesla.get_header(env, "x-http-reason-phrase")}
   end
 
   defp parse_result({:error, error}) do
