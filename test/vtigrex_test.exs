@@ -189,6 +189,18 @@ defmodule VtigrexTest do
               }}
   end
 
+  test "returns error on network errors", context do
+    Tesla.Mock.mock(fn
+      %{
+        method: :get,
+        url: "https://example.odx.vtiger.com/restapi/v1/vtiger/default/me"
+      } ->
+        {:error, :econnrefused}
+    end)
+
+    assert Vtigrex.me(context[:client]) == {:error, :econnrefused}
+  end
+
   test "lists all types", context do
     Tesla.Mock.mock(fn
       %{

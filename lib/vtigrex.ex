@@ -37,7 +37,7 @@ defmodule Vtigrex do
   @doc """
   Gets the current user.
   """
-  @spec me(Tesla.Client.t()) :: {:ok, map()} | {:error, String.t()}
+  @spec me(Tesla.Client.t()) :: {:ok, map()} | {:error, any()}
   def me(client) do
     client
     |> Tesla.get("/me")
@@ -47,8 +47,7 @@ defmodule Vtigrex do
   @doc """
   Lists types.
   """
-  @spec list_types(Tesla.Client.t(), nil | [String.t()]) ::
-          {:ok, map()} | {:error, String.t()}
+  @spec list_types(Tesla.Client.t(), nil | [String.t()]) :: {:ok, map()} | {:error, any()}
   def list_types(client, field_type_list \\ nil) do
     client
     |> Tesla.get("/listtypes",
@@ -62,8 +61,7 @@ defmodule Vtigrex do
   @doc """
   Describes a type.
   """
-  @spec describe(Tesla.Client.t(), String.t()) ::
-          {:ok, map()} | {:error, String.t()}
+  @spec describe(Tesla.Client.t(), String.t()) :: {:ok, map()} | {:error, any()}
   def describe(client, element_type) do
     client
     |> Tesla.get("/describe",
@@ -77,7 +75,7 @@ defmodule Vtigrex do
   @doc """
   Runs a query and returns its results.
   """
-  @spec query(Tesla.Client.t(), String.t()) :: {:ok, list()} | {:error, String.t()}
+  @spec query(Tesla.Client.t(), String.t()) :: {:ok, list()} | {:error, any()}
   def query(client, query) do
     client
     |> Tesla.get("/query", query: [query: query])
@@ -87,7 +85,7 @@ defmodule Vtigrex do
   @doc """
   Retrieves a record.
   """
-  @spec retrieve(Tesla.Client.t(), String.t()) :: {:ok, map()} | {:error, String.t()}
+  @spec retrieve(Tesla.Client.t(), String.t()) :: {:ok, map()} | {:error, any()}
   def retrieve(client, id) do
     client
     |> Tesla.get("/retrieve", query: [id: id])
@@ -97,8 +95,7 @@ defmodule Vtigrex do
   @doc """
   Creates a new record.
   """
-  @spec create(Tesla.Client.t(), String.t(), map()) ::
-          {:ok, map()} | {:error, String.t() | Jason.EncodeError.t() | Exception.t()}
+  @spec create(Tesla.Client.t(), String.t(), map()) :: {:ok, map()} | {:error, any()}
   def create(client, element_type, %{} = element) do
     with {:ok, element} <- Jason.encode(element) do
       client
@@ -117,8 +114,7 @@ defmodule Vtigrex do
 
   All the mandatory fields need to be specified.
   """
-  @spec update(Tesla.Client.t(), String.t(), map()) ::
-          {:ok, map()} | {:error, String.t() | Jason.EncodeError.t() | Exception.t()}
+  @spec update(Tesla.Client.t(), String.t(), map()) :: {:ok, map()} | {:error, any()}
   def update(client, id, %{} = element) do
     with {:ok, element} <- element |> Map.put("id", id) |> Jason.encode() do
       client
@@ -136,8 +132,7 @@ defmodule Vtigrex do
 
   It relaxes the constraint that all mandatory fields need to be specified.
   """
-  @spec revise(Tesla.Client.t(), String.t(), map()) ::
-          {:ok, map()} | {:error, String.t() | Jason.EncodeError.t() | Exception.t()}
+  @spec revise(Tesla.Client.t(), String.t(), map()) :: {:ok, map()} | {:error, any()}
   def revise(client, id, %{} = element) do
     with {:ok, element} <- element |> Map.put("id", id) |> Jason.encode() do
       client
@@ -153,7 +148,7 @@ defmodule Vtigrex do
   @doc """
   Deletes a record.
   """
-  @spec delete(Tesla.Client.t(), String.t()) :: {:ok, map()} | {:error, String.t()}
+  @spec delete(Tesla.Client.t(), String.t()) :: {:ok, map()} | {:error, any()}
   def delete(client, id) do
     client
     |> Tesla.get("/delete",
@@ -176,5 +171,9 @@ defmodule Vtigrex do
 
   defp parse_result({:ok, %Tesla.Env{status: 401}}) do
     {:error, "Unauthorized"}
+  end
+
+  defp parse_result({:error, error}) do
+    {:error, error}
   end
 end
