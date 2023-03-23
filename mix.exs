@@ -1,15 +1,27 @@
 defmodule Vtigrex.MixProject do
   use Mix.Project
 
+  @version "0.1.0"
+
+  @description "vtiger Rest API wrapper"
+  @source_url "https://github.com/fuww/vtigrex"
+
   def project do
     [
       app: :vtigrex,
-      version: "0.1.0",
+      version: @version,
       elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       dialyzer: [
         ignore_warnings: ".dialyzer_ignore.exs"
+      ],
+      description: @description,
+      package: package(),
+      docs: [
+        source_ref: "v#{@version}",
+        main: "Vtigrex",
+        source_url: @source_url
       ]
     ]
   end
@@ -29,6 +41,14 @@ defmodule Vtigrex.MixProject do
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.29.3", only: [:dev], runtime: false},
       {:credo, "~> 1.7", only: [:dev], runtime: false}
+    ]
+  end
+
+  def package do
+    [
+      maintainers: ["Péter Pál Koszta"],
+      licenses: ["Apache-2.0"],
+      links: %{"GitHub" => @source_url}
     ]
   end
 end
